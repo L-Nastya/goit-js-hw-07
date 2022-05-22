@@ -31,8 +31,16 @@ function onGalleryListClick(e) {
   if (!e.target.classList.contains("gallery__image")) {
     return;
   } else {
-    const instance = basicLightbox.create(`<img src= "${e.target.dataset.source}" alt="${e.target.alt}"/>`);
+    const instance = basicLightbox.create(`<img src= "${e.target.dataset.source}" alt="${e.target.alt}"/>`,
+       { onShow: () => {window.addEventListener('keydown', onEscPress) } },
+    );
     instance.show()
+function onEscPress(e) {
+        if (e.code === 'Escape') {
+            instance.close();
+            window.removeEventListener('keydown', onEscPress);
+        }
+}
   } 
   console.log(e.target);
 }
